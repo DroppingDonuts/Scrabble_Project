@@ -6,11 +6,15 @@ public class Word {
 	
 	private String word;
 	private char[] sortedLetters;
+	private int plainPoints;
+	
+	private static final LetterDictionary DICTIONARY = new LetterDictionary();
 	
 	public Word(String w) {
 		word = w;
 		sortedLetters = w.toCharArray();
 		Arrays.sort(sortedLetters);
+		calculatePlainPoints();
 	}
 	
 	public String getWord() {
@@ -19,6 +23,16 @@ public class Word {
 	
 	public char[] getSorted() {
 		return sortedLetters;
+	}
+	
+	public int getPlainPoints() {
+		return plainPoints;
+	}
+	
+	private void calculatePlainPoints() {
+		for(char c: sortedLetters) {
+			plainPoints += DICTIONARY.get(c);
+		}
 	}
 	
 	public String printSorted() {

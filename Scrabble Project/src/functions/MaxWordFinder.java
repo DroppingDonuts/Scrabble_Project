@@ -9,17 +9,25 @@ import dictionary.Word;
 public class MaxWordFinder {
 	
 	protected static ArrayList<String> validWords;
-	protected static int[] maxPoints = new int[3];
-	protected static String[] bestWords = new String[3];
+	protected static ArrayList<Integer> maxPoints = new ArrayList<Integer>(4);
+	protected static ArrayList<String> bestWords = new ArrayList<String>(4);
+	
+	private static void prepMaxHolders() {
+		for(int i = 0; i < 3; i++) {
+			maxPoints.add(null);
+			bestWords.add(null);
+		}
+	}
 	
 	public static void main(String[] args) {
+		prepMaxHolders();
 		//Make our dictionary
 		AllWords all = new AllWords();
 		ArrayList<Word> wordList = all.getWordList();
 		
 		validWords = new ArrayList<String>();
-		char given = 'l';
-		char[] letters = {'b', 'c', 'd', 'e', 'a', 'g', 'h', ' '};
+		char given = 'e';
+		char[] letters = {'q', 'c', 'u', 'e', 'a', 'g', 'h', ' '};
 		letters[7] = given;
 		Arrays.sort(letters);
 		for (int i = 0; i < wordList.size(); i++) {
@@ -68,12 +76,34 @@ public class MaxWordFinder {
 				}
 				//Yay! We found a word that meets our requirements!
 				if (containsLetters) {
+					//I kept in validWords for debugging just in case
 					validWords.add(thisWord);
-					//calculate point value of this word and add to points array
+					//This uses a less efficient 'plain points' method - points without taking into account
+					//the board set-up
+					int points = current.getPlainPoints();
+					
+					//Break statements are used to not set all of the 'best words' to the top word
+					for(int j = 0; j < 3; j++) {
+						if(maxPoints.get(j) == null) {
+							maxPoints.set(j, Integer.valueOf(points));
+							bestWords.set(j, thisWord);
+							break;
+						} else if(maxPoints.get(j).intValue() < points) {
+							//Insert the word in
+							maxPoints.add(j, Integer.valueOf(points));
+							bestWords.add(j, thisWord);
+							//Get rid of the bottom words
+							maxPoints.set(3, null);
+							bestWords.set(3, null);
+							break;
+						}
+					}
 				}
 			}
 		}
 		System.out.println(validWords);
+		System.out.println(bestWords);
+		System.out.println(maxPoints);
 	}
 
 }
