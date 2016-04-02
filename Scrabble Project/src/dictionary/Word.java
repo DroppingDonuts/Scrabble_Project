@@ -17,6 +17,10 @@ public class Word {
 		return word;
 	}
 	
+	public char[] getSorted() {
+		return sortedLetters;
+	}
+	
 	public String printSorted() {
 		return Arrays.toString(sortedLetters);
 	}
@@ -30,19 +34,18 @@ public class Word {
 		//Establish the "markers" for binary search
 		int start = 0;
 		int end = sortedLetters.length - 1;
-		int mid = (end - start) / 2;
 		
 		//Perform a binary search
-		while(end - start != 0) {
+		while(end >= start) {
+			int mid = (end + start) / 2;
 			char test = sortedLetters[mid];
 			if(test == letter) {
 				return true;
-			} else if(test > letter) {
+			} else if(test < letter) {
 				start = mid + 1;
 			} else {
 				end = mid - 1;
 			}
-			mid = (end - start) / 2;
 		}
 		
 		//Didn't find it
