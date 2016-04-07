@@ -8,7 +8,7 @@ public class Word {
 	private char[] sortedLetters;
 	private int plainPoints;
 	
-	private static final LetterDictionary DICTIONARY = new LetterDictionary();
+	public static final LetterDictionary DICTIONARY = new LetterDictionary();
 	
 	public Word(String w) {
 		word = w;
