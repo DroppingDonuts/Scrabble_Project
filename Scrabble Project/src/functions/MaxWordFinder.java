@@ -237,7 +237,7 @@ public class MaxWordFinder {
 		}
 		points *= wordMul;
 		//Add in the 50 point max word length bonus
-		if(word.length() == 15) {
+		if(word.length() == 8) {
 			points += 50;
 		}
 		return points;
