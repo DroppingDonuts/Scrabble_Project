@@ -34,6 +34,7 @@ public class MaxWordFinder {
 	protected static final AllWords ALL = new AllWords();
 	
     protected static ArrayList<String> validWords;
+    protected static ArrayList<Integer> validWordPoints;
     protected static ArrayList<Word> wordList;
 	protected static ArrayList<Integer> maxPoints = new ArrayList<Integer>(4);
 	protected static ArrayList<String> bestWords = new ArrayList<String>(4);
@@ -45,6 +46,7 @@ public class MaxWordFinder {
 		//Make our dictionary
 		wordList = ALL.getWordList();
 		validWords = new ArrayList<String>();
+		validWordPoints = new ArrayList<Integer>();
 	}
 	
 	private static void prepMaxHolders() {
@@ -148,6 +150,7 @@ public class MaxWordFinder {
 					//This uses a less efficient 'plain points' method - points without taking into account
 					//the board set-up
 					int points = findBestPlacement(given, x, y, thisWord);
+					validWordPoints.add(points);
 					
 					//Break statements are used to not set all of the 'best words' to the top word
 					for(int j = 0; j < 3; j++) {
@@ -160,8 +163,8 @@ public class MaxWordFinder {
 							maxPoints.add(j, Integer.valueOf(points));
 							bestWords.add(j, thisWord);
 							//Get rid of the bottom words
-							maxPoints.set(3, null);
-							bestWords.set(3, null);
+							maxPoints.remove(3);
+							bestWords.remove(3);
 							break;
 						}
 					}
@@ -169,6 +172,7 @@ public class MaxWordFinder {
 			}
 		}
 		System.out.println(validWords);
+		System.out.println(validWordPoints);
 		System.out.println(bestWords);
 		System.out.println(maxPoints);
 	}
